@@ -18,7 +18,7 @@ type testClock struct {
 
 func (t *testClock) Now() time.Time {
 	t.idx++
-	return time.Unix(t.idx, 0)
+	return time.Unix(t.idx, 0).UTC()
 }
 
 func (t *testClock) NewTicker(d time.Duration) *time.Ticker {
@@ -48,10 +48,10 @@ func TestProductionConfig(t *testing.T) {
 
 	got := writer.Lines()
 	want := []string{
-		`{"severity":"DEBUG","time":"1969-12-31T16:00:01-08:00","message":"testing debug","the_data":[1,2,3]}`,
-		`{"severity":"INFO","time":"1969-12-31T16:00:02-08:00","message":"testing info","some_field":"abc123","another_field":321}`,
-		`{"severity":"WARNING","time":"1969-12-31T16:00:03-08:00","message":"testing warn","real_bad":false,"error":"a minor inconvenience"}`,
-		`{"severity":"ERROR","time":"1969-12-31T16:00:04-08:00","message":"testing error","boiler_temp":98734.32,"error":"a real concern"}`,
+		`{"severity":"DEBUG","time":"1970-01-01T00:00:01Z","message":"testing debug","the_data":[1,2,3]}`,
+		`{"severity":"INFO","time":"1970-01-01T00:00:02Z","message":"testing info","some_field":"abc123","another_field":321}`,
+		`{"severity":"WARNING","time":"1970-01-01T00:00:03Z","message":"testing warn","real_bad":false,"error":"a minor inconvenience"}`,
+		`{"severity":"ERROR","time":"1970-01-01T00:00:04Z","message":"testing error","boiler_temp":98734.32,"error":"a real concern"}`,
 	}
 
 	if diff := cmp.Diff(want, got); diff != "" {
@@ -61,7 +61,7 @@ func TestProductionConfig(t *testing.T) {
 	logger.DPanic("testing dpanic", zap.Duration("time_til_implosion", 3*time.Millisecond), zap.Error(errors.New("divided by zero successfully")))
 
 	// DPanic should include a stacktrace, which will be machine-specific. So we just do a string match on the prefix.
-	wantPrefix := `{"severity":"CRITICAL","time":"1969-12-31T16:00:05-08:00","message":"testing dpanic","time_til_implosion":3,"error":"divided by zero successfully","stacktrace":"github.com/Silicon-Ally/zapgcp.TestProductionConfig`
+	wantPrefix := `{"severity":"CRITICAL","time":"1970-01-01T00:00:05Z","message":"testing dpanic","time_til_implosion":3,"error":"divided by zero successfully","stacktrace":"github.com/Silicon-Ally/zapgcp.TestProductionConfig`
 	lines := writer.Lines()
 	gotLine := lines[len(lines)-1]
 
