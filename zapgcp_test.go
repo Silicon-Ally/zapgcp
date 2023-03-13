@@ -61,7 +61,7 @@ func TestProductionConfig(t *testing.T) {
 	logger.DPanic("testing dpanic", zap.Duration("time_til_implosion", 3*time.Millisecond), zap.Error(errors.New("divided by zero successfully")))
 
 	// DPanic should include a stacktrace, which will be machine-specific. So we just do a string match on the prefix.
-	wantPrefix := `{"severity":"CRITICAL","time":"1970-01-01T00:00:05Z","message":"testing dpanic","time_til_implosion":3,"error":"divided by zero successfully","stacktrace":"github.com/Silicon-Ally/zapgcp.TestProductionConfig`
+	wantPrefix := `{"severity":"CRITICAL","time":"1970-01-01T00:00:05Z","message":"testing dpanic","time_til_implosion":3000000,"error":"divided by zero successfully","stacktrace":"github.com/Silicon-Ally/zapgcp.TestProductionConfig`
 	lines := writer.Lines()
 	gotLine := lines[len(lines)-1]
 
