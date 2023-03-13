@@ -47,7 +47,7 @@ func (cfg *Config) ToZapConfig() (zap.Config, []zap.Option) {
 			LineEnding:     zapcore.DefaultLineEnding,
 			EncodeLevel:    encodeLevel,
 			EncodeTime:     zapcore.RFC3339TimeEncoder,
-			EncodeDuration: zapcore.MillisDurationEncoder,
+			EncodeDuration: zapcore.NanosDurationEncoder,
 			EncodeCaller:   zapcore.ShortCallerEncoder,
 		},
 		OutputPaths:      []string{"stdout"},
