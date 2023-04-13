@@ -13,3 +13,8 @@ details and usage instructions.
 
 [![GoDoc](https://pkg.go.dev/badge/github.com/Silicon-Ally/zapgcp?status.svg)](https://pkg.go.dev/github.com/Silicon-Ally/zapgcp?tab=doc)
 [![CI Workflow](https://github.com/Silicon-Ally/zapgcp/actions/workflows/test.yml/badge.svg)](https://github.com/Silicon-Ally/zapgcp/actions?query=branch%3Amain)
+
+## Contributing
+
+Contribution guidelines can be found [on our website](https://siliconally.org/oss/contributor-guidelines).
+
